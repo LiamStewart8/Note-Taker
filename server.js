@@ -21,6 +21,7 @@ app.get("/api/notes", function (req, res) {
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
         if (err) throw err;
         const newData = JSON.parse(data);
+        console.log(newData);
         res.json(newData);
     })
 })
@@ -30,6 +31,7 @@ app.post("/api/notes", function (req, res){
         if (err) throw err;
         const newData = JSON.parse(data);
         const newNote = req.body;
+        newNote.id = newData.length + 1;
         newData.push(newNote);
     
     fs.writeFile('./db/db.json', JSON.stringify(newData) ,(err) => {
@@ -37,9 +39,13 @@ app.post("/api/notes", function (req, res){
         res.json(newData);
     });
     
-
     
 });
+});
+
+app.delete('/api/notes/:id', function(req){
+    const id = req.params.id;
+    
 });
 
 app.listen(PORT, function () {
