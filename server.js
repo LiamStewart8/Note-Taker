@@ -3,7 +3,7 @@ var path = require('path');
 var fs = require('fs');
 
 var app = express();
-var PORT = 3000;
+var PORT = process.env.PORT || 3000;
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.urlencoded({ extended: true }));
@@ -21,7 +21,6 @@ app.get("/api/notes", function (req, res) {
     fs.readFile('./db/db.json', 'utf8', (err, data) => {
         if (err) throw err;
         const newData = JSON.parse(data);
-        console.log(newData);
         res.json(newData);
     })
 })
